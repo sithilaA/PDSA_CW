@@ -1,78 +1,54 @@
 package main.service;
 
-import main.model.TransactionNode;
+import main.model.Transaction;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class TransactionService {
-    private TransactionNode head;
+    private List<Transaction> transactions;
 
     public TransactionService() {
-        this.head = null;
+        this.transactions = new LinkedList<>();
     }
 
     public void addTransaction(String type, double amount, String description) {
-        TransactionNode newNode = new TransactionNode(type, amount, description);
-        if (head == null) {
-            head = newNode;
-        } else {
-            TransactionNode current = head;
-            while (current.getNext() != null) {
-                current = current.getNext();
-            }
-            current.setNext(newNode);
-        }
+        Transaction transaction = new Transaction(type, amount, description);
+        transactions.add(transaction);
     }
 
-    public void updateTransaction(TransactionNode transaction, double newAmount, String newDescription) {
+    public void updateTransaction(Transaction transaction, double newAmount, String newDescription) {
         transaction.setAmount(newAmount);
         transaction.setDescription(newDescription);
     }
 
-    public void deleteTransaction(TransactionNode transaction) {
-        if (head == transaction) {
-            head = head.getNext();
-        } else {
-            TransactionNode current = head;
-            while (current != null && current.getNext() != transaction) {
-                current = current.getNext();
-            }
-            if (current != null) {
-                current.setNext(transaction.getNext());
-            }
-        }
+    public void deleteTransaction(Transaction transaction) {
+        transactions.remove(transaction);
     }
 
-    public List<TransactionNode> getTransactionsByType(String type) {
-        List<TransactionNode> transactions = new ArrayList<>();
-        TransactionNode current = head;
-        while (current != null) {
-            if (current.getType().equalsIgnoreCase(type)) {
-                transactions.add(current);
+    public List<Transaction> getTransactionsByType(String type) {
+        List<Transaction> filteredTransactions = new LinkedList<>();
+        for (Transaction transaction : transactions) {
+            if (transaction.getType().equalsIgnoreCase(type)) {
+                filteredTransactions.add(transaction);
             }
-            current = current.getNext();
         }
-        return transactions;
+        return filteredTransactions;
     }
 
     public void printAllTransactions() {
         System.out.println("Incomes:");
-        TransactionNode current = head;
-        while (current != null) {
-            if (current.getType().equalsIgnoreCase("income")) {
-                System.out.println("Description: " + current.getDescription() + ", Amount: " + current.getAmount());
+        for (Transaction transaction : transactions) {
+            if (transaction.getType().equalsIgnoreCase("income")) {
+                System.out.println("Description: " + transaction.getDescription() + ", Amount: " + transaction.getAmount());
             }
-            current = current.getNext();
         }
 
         System.out.println("\nExpenses:");
-        current = head;
-        while (current != null) {
-            if (current.getType().equalsIgnoreCase("expense")) {
-                System.out.println("Description: " + current.getDescription() + ", Amount: " + current.getAmount());
+        for (Transaction transaction : transactions) {
+            if (transaction.getType().equalsIgnoreCase("expense")) {
+                System.out.println("Description: " + transaction.getDescription() + ", Amount: " + transaction.getAmount());
             }
-            current = current.getNext();
         }
     }
 
@@ -80,14 +56,12 @@ public class TransactionService {
         double totalIncome = 0;
         double totalExpense = 0;
 
-        TransactionNode current = head;
-        while (current != null) {
-            if (current.getType().equalsIgnoreCase("income")) {
-                totalIncome += current.getAmount();
-            } else if (current.getType().equalsIgnoreCase("expense")) {
-                totalExpense += current.getAmount();
+        for (Transaction transaction : transactions) {
+            if (transaction.getType().equalsIgnoreCase("income")) {
+                totalIncome += transaction.getAmount();
+            } else if (transaction.getType().equalsIgnoreCase("expense")) {
+                totalExpense += transaction.getAmount();
             }
-            current = current.getNext();
         }
 
         System.out.println("Total Income: " + totalIncome);

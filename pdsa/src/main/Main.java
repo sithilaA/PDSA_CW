@@ -1,7 +1,7 @@
 package main;
 
 import main.service.TransactionService;
-import main.model.TransactionNode;
+import main.model.Transaction;
 
 import java.util.List;
 import java.util.Scanner;
@@ -106,19 +106,19 @@ public class Main {
 
     private static void updateTransaction(Scanner scanner, TransactionService transactionService) {
         while (true) {
-            System.out.println("Choose the type to update (income/expense, 000 to go back):");
+            System.out.println("Choose the type to update (income/expense, home to go back):");
             String type = scanner.nextLine();
-            if (type.equalsIgnoreCase("000")) {
+            if (type.equalsIgnoreCase("home")) {
                 return;
             } else if (type.equalsIgnoreCase("income") || type.equalsIgnoreCase("expense")) {
-                List<TransactionNode> transactions = transactionService.getTransactionsByType(type);
+                List<Transaction> transactions = transactionService.getTransactionsByType(type);
                 if (transactions.isEmpty()) {
                     System.out.println("No transactions found.");
                     return;
                 }
                 System.out.println("Select the transaction to update:");
                 for (int i = 0; i < transactions.size(); i++) {
-                    TransactionNode transaction = transactions.get(i);
+                    Transaction transaction = transactions.get(i);
                     System.out.println((i + 1) + ". Description: " + transaction.getDescription() + ", Amount: " + transaction.getAmount());
                 }
                 int index = getValidChoice(scanner, transactions.size()) - 1;
@@ -137,26 +137,26 @@ public class Main {
 
     private static void deleteTransaction(Scanner scanner, TransactionService transactionService) {
         while (true) {
-            System.out.println("Choose the type to delete (income/expense, 000 to go back):");
+            System.out.println("Choose the type to delete (income/expense, home to go back):");
             String type = scanner.nextLine();
-            if (type.equalsIgnoreCase("000")) {
+            if (type.equalsIgnoreCase("home")) {
                 return;
             } else if (type.equalsIgnoreCase("income") || type.equalsIgnoreCase("expense")) {
-                List<TransactionNode> transactions = transactionService.getTransactionsByType(type);
+                List<Transaction> transactions = transactionService.getTransactionsByType(type);
                 if (transactions.isEmpty()) {
-                    System.out.println("No transactions found");
+                    System.out.println("No transactions found.");
                     return;
                 }
                 System.out.println("Select the transaction to delete:");
                 for (int i = 0; i < transactions.size(); i++) {
-                    TransactionNode transaction = transactions.get(i);
+                    Transaction transaction = transactions.get(i);
                     System.out.println((i + 1) + ". Description: " + transaction.getDescription() + ", Amount: " + transaction.getAmount());
                 }
                 int index = getValidChoice(scanner, transactions.size()) - 1;
                 transactionService.deleteTransaction(transactions.get(index));
                 return;
             } else {
-                System.out.println("Invalid type");
+                System.out.println("Invalid type, please try again.");
             }
         }
     }
