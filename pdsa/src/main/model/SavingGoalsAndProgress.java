@@ -18,7 +18,7 @@ public class SavingGoalsAndProgress {
         saving_goal_03 = scanner.nextDouble();
 
         if ( saving_goal_03>0 ){
-            System.out.println("Saving Goal Saved Successfully.");
+            System.out.println("Saving goal has been saved successfully.");
         }
     }
     public void track_progress(double total_expenses,double total_income){
