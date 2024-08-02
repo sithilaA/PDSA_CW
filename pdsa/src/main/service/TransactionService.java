@@ -69,6 +69,24 @@ public class TransactionService {
         System.out.println("Total Expense: " + totalExpense);
         System.out.println("Net Balance: " + (totalIncome - totalExpense));
     }
+    public double totalIncome(){
+        double totalIncome = 0;
+        for (Transaction transaction : transactions) {
+            if (transaction.getType().equalsIgnoreCase("income")) {
+                totalIncome += transaction.getAmount();
+            }
+        }
+        return totalIncome;
+    }
+    public double totalExpense(){
+        double totalExpense = 0;
+        for (Transaction transaction : transactions) {
+            if (transaction.getType().equalsIgnoreCase("expense")) {
+                totalExpense += transaction.getAmount();
+            }
+        }
+        return totalExpense;
+    }
 
     public void addIncome() {
         double totIncome = 0;

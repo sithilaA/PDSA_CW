@@ -1,5 +1,7 @@
 package main;
 
+import main.model.SavingGoalsAndProgress;
+import main.model.SpendingAlerts;
 import main.service.LoanService;
 import main.model.Loan;
 import main.service.TransactionService;
@@ -13,6 +15,8 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         TransactionService transactionService = new TransactionService();
         LoanService loanService = new LoanService();
+        SavingGoalsAndProgress savingGoalsAndProgress =new SavingGoalsAndProgress();
+        SpendingAlerts spendingAlerts = new SpendingAlerts();
 
         while (true) {
             System.out.println("Choose an option:");
@@ -22,9 +26,13 @@ public class Main {
             System.out.println("4. Delete a Transaction");
             System.out.println("5. Tax calculation");
             System.out.println("6. Loans");
-            System.out.println("7. Exit");
+            System.out.println("7. Create Saving Goals");
+            System.out.println("8. Track Progress");
+            System.out.println("9. Set Spending Alert");
+            System.out.println("10. Check Spending Alert");
+            System.out.println("11. Exit");
 
-            int choice = getValidChoice(scanner, 7);
+            int choice = getValidChoice(scanner, 11);
 
             if (choice == 1) {
                 addIncomesAndExpenses(scanner, transactionService);
@@ -38,7 +46,15 @@ public class Main {
                 TaxCalculation(transactionService);
             }else if (choice == 6){
                 LoanMan(scanner, loanService);
-            } else if(choice == 7) {
+            }else if (choice == 7) {
+                create_Saving_Goals(scanner ,"Create",savingGoalsAndProgress,transactionService);
+            }else if (choice == 8){
+                create_Saving_Goals(scanner ,"Check",savingGoalsAndProgress,transactionService);
+            } else if (choice == 9) {
+                create_Spending_Alert(scanner,spendingAlerts);
+            } else if (choice ==10) {
+                check_Spending_Alert(spendingAlerts,transactionService);
+            } else if(choice == 11) {
                 break;
             }
         }
@@ -246,6 +262,22 @@ public class Main {
         }
         loanService.printAllLoans();
     }
+    public static void create_Saving_Goals(Scanner scanner ,String type,SavingGoalsAndProgress savingGoalsAndProgress , TransactionService transactionService){
+
+        if(type == "Create"){
+            savingGoalsAndProgress.create_Saving_Goals(scanner);
+        }
+        else if(type == "Check"){
+            savingGoalsAndProgress.track_progress(transactionService.totalExpense(), transactionService.totalIncome());
+        }
+    }
+    public static void create_Spending_Alert(Scanner scanner,SpendingAlerts spendingAlerts){
+        spendingAlerts.set_Spending_Alert(scanner);
+    }
+    public static void check_Spending_Alert(SpendingAlerts spendingAlerts,TransactionService transactionService){
+        spendingAlerts.Check_Spending_Alert(transactionService.totalExpense());
+    }
+
 
     /*private static void addIncomesAndExpenses(Scanner scanner, TransactionService transactionService) {
         while (true) {
