@@ -5,6 +5,7 @@ import main.model.Loan;
 import main.service.TransactionService;
 import main.model.Transaction;
 
+import java.sql.SQLOutput;
 import java.util.List;
 import java.util.Scanner;
 
@@ -22,7 +23,9 @@ public class Main {
             System.out.println("4. Delete a Transaction");
             System.out.println("5. Tax calculation");
             System.out.println("6. Loans");
-            System.out.println("7. Exit");
+            System.out.println("7. Create Saving Goals");
+            System.out.println("8. Track Progress");
+            System.out.println("9. Exit");
 
             int choice = getValidChoice(scanner, 5);
 
@@ -38,7 +41,11 @@ public class Main {
                 TaxCalculation(transactionService);
             }else if (choice == 6){
                 LoanMan(scanner, loanService);
-            } else if(choice == 7) {
+            } else if (choice == 7) {
+                System.out.println("7 Select");
+            } else if (choice == 8) {
+                System.out.println("8 Select");
+            } else if(choice == 9) {
                 break;
             }
         }
