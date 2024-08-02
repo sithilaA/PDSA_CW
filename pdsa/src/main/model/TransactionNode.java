@@ -1,7 +1,7 @@
 package main.model;
 
 public class TransactionNode {
-    private String type; // "income" or "expense"
+    private String type; //income or expense
     private double amount;
     private String description;
     private TransactionNode next;
