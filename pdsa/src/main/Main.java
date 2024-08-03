@@ -15,10 +15,9 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         TransactionService transactionService = new TransactionService();
         LoanService loanService = new LoanService();
-        // ---------------- Akalanka
         SavingGoalsAndProgress savingGoalsAndProgress =new SavingGoalsAndProgress();
         SpendingAlerts spendingAlerts = new SpendingAlerts();
-        // ---------------- Akalanka
+
 
         while (true) {
             System.out.println("Choose an option:");
@@ -28,14 +27,12 @@ public class Main {
             System.out.println("4. Delete a Transaction");
             System.out.println("5. Tax calculation");
             System.out.println("6. Loans");
-            // ---------------- Akalanka
             System.out.println("7. Create Saving Goals");
             System.out.println("8. Track Progress");
             System.out.println("9. Set Spending Alert");
             System.out.println("10. Check Spending Alert");
-            System.out.println("12. Report ");
-            // ---------------- Akalanka
-            System.out.println("11. Exit");
+            System.out.println("11. Report ");
+            System.out.println("12. Exit");
 
             int choice = getValidChoice(scanner, 12);
 
@@ -52,7 +49,6 @@ public class Main {
             }else if (choice == 6){
                 LoanMan(scanner, loanService);
             }
-            // ---------------- Akalanka
             else if (choice == 7) {
                 create_Saving_Goals(scanner ,"Create",savingGoalsAndProgress,transactionService);
             }else if (choice == 8){
@@ -61,12 +57,10 @@ public class Main {
                 create_Spending_Alert(scanner,spendingAlerts);
             } else if (choice ==10) {
                 check_Spending_Alert(spendingAlerts,transactionService);
-            } else if (choice ==12) {
+            } else if (choice ==11) {
                 report(transactionService);
             }
-
-            // ---------------- Akalanka
-            else if(choice == 11) {
+            else if(choice == 12) {
                 break;
             }
         }
@@ -274,7 +268,6 @@ public class Main {
         }
         loanService.printAllLoans();
     }
-    // ---------------- Akalanka
     public static void create_Saving_Goals(Scanner scanner ,String type,SavingGoalsAndProgress savingGoalsAndProgress , TransactionService transactionService){
 
         if(type == "Create"){
@@ -298,7 +291,7 @@ public class Main {
 
 
     }
-    // ---------------- Akalanka
+
 
     /*private static void addIncomesAndExpenses(Scanner scanner, TransactionService transactionService) {
         while (true) {
