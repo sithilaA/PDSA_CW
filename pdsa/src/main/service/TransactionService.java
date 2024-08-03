@@ -36,7 +36,7 @@ public class TransactionService {
         }
         return filteredTransactions;
     }
-
+    // Akalanka
     public void printAllTransactions() {
         System.out.println("Incomes:");
         for (Transaction transaction : transactions) {
@@ -69,6 +69,8 @@ public class TransactionService {
         System.out.println("Total Expense: " + totalExpense);
         System.out.println("Net Balance: " + (totalIncome - totalExpense));
     }
+    //Akalanka
+
     public double totalIncome(){
         double totalIncome = 0;
         for (Transaction transaction : transactions) {
