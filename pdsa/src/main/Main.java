@@ -6,6 +6,7 @@ import main.service.LoanService;
 import main.model.Loan;
 import main.service.TransactionService;
 import main.model.Transaction;
+import main.service.TaxService;
 
 import java.util.List;
 import java.util.Scanner;
@@ -32,9 +33,11 @@ public class Main {
             System.out.println("9. Set Spending Alert");
             System.out.println("10. Check Spending Alert");
             System.out.println("11. Report ");
-            System.out.println("12. Exit");
+            System.out.println("12. Currency Converter");
+            System.out.println("13. Expense & Budget Tracker");
+            System.out.println("14. Exit");
 
-            int choice = getValidChoice(scanner, 12);
+            int choice = getValidChoice(scanner, 14);
 
             if (choice == 1) {
                 addIncomesAndExpenses(scanner, transactionService);
@@ -48,8 +51,7 @@ public class Main {
                 TaxCalculation(transactionService);
             }else if (choice == 6){
                 LoanMan(scanner, loanService);
-            }
-            else if (choice == 7) {
+            } else if (choice == 7) {
                 create_Saving_Goals(scanner ,"Create",savingGoalsAndProgress,transactionService);
             }else if (choice == 8){
                 create_Saving_Goals(scanner ,"Check",savingGoalsAndProgress,transactionService);
@@ -59,8 +61,11 @@ public class Main {
                 check_Spending_Alert(spendingAlerts,transactionService);
             } else if (choice ==11) {
                 report(transactionService);
-            }
-            else if(choice == 12) {
+            } else if(choice == 12) {
+                currencyConversion();
+            }else if(choice == 13) {
+                expenseAndBudgetTracker(transactionService);
+            }else if(choice == 14) {
                 break;
             }
         }
@@ -247,7 +252,7 @@ public class Main {
     }
 
     private static void TaxCalculation(TransactionService transactionService){
-        transactionService.addIncome();
+        transactionService.taxCalculation();
     }
 
     private static void LoanMan(Scanner scanner, LoanService loanService){
@@ -263,11 +268,14 @@ public class Main {
             }
             System.out.println("Enter loan description:");
             String description = scanner.nextLine();
-            loanService.addLoans(amount, description);
-            //loanService.printAllLoans();
+            System.out.println("Enter Interest Rate:");
+            double interestRate = scanner.nextDouble();
+            loanService.addLoans(amount, description, interestRate);
         }
         loanService.printAllLoans();
+        loanService.calculateInterest();
     }
+
     public static void create_Saving_Goals(Scanner scanner ,String type,SavingGoalsAndProgress savingGoalsAndProgress , TransactionService transactionService){
 
         if(type == "Create"){
@@ -291,6 +299,58 @@ public class Main {
 
 
     }
+    private static void currencyConversion() {
+        Scanner scanner = new Scanner(System.in);
+
+        double usdToLkr = 330.50;
+        double eurToLkr = 365.75;
+
+        System.out.println("Choose an option ");
+        System.out.println("1. LKR to other currency");
+        System.out.println("2. Other currency to LKR");
+        int option = scanner.nextInt();
+
+        if (option == 1) {
+            System.out.print("Enter currency in short form (USD or EUR): ");
+            String currency = scanner.next().toUpperCase();
+            System.out.print("Enter amount in LKR: ");
+            double amountInLKR = scanner.nextDouble();
+
+            double convertedAmount = 0;
+            if (currency.equals("USD")) {
+                convertedAmount = amountInLKR / usdToLkr;
+                System.out.println("LKR " + amountInLKR + " = USD " + convertedAmount);
+            } else if (currency.equals("EUR")) {
+                convertedAmount = amountInLKR / eurToLkr;
+                System.out.println("LKR " + amountInLKR + " = EUR " + convertedAmount);
+            } else {
+                System.out.println("Unsupported currency.");
+            }
+        } else if (option == 2) {
+            System.out.print("Enter currency (USD or EUR): ");
+            String currency = scanner.next().toUpperCase();
+            System.out.print("Enter amount: ");
+            double amount = scanner.nextDouble();
+
+            double convertedAmount = 0;
+            if (currency.equals("USD")) {
+                convertedAmount = amount * usdToLkr;
+                System.out.println("USD " + amount + " = LKR " + convertedAmount);
+            } else if (currency.equals("EUR")) {
+                convertedAmount = amount * eurToLkr;
+                System.out.println("EUR " + amount + " = LKR " + convertedAmount);
+            } else {
+                System.out.println("Unsupported currency.");
+            }
+        } else {
+            System.out.println("Invalid option.");
+        }
+    }
+    private static void expenseAndBudgetTracker(TransactionService transactionService){
+        transactionService.expenseAndBudgetTracker();
+    }
+
+
 
 
     /*private static void addIncomesAndExpenses(Scanner scanner, TransactionService transactionService) {
@@ -322,3 +382,4 @@ public class Main {
             transactionService.addTransaction("expense", amount, description);
         }*/
 }
+

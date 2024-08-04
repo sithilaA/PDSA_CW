@@ -93,6 +93,38 @@ public class TransactionService {
         for (Transaction transaction : transactions) {
             totIncome += transaction.getAmount();
         }
+    }
+
+    public void expenseAndBudgetTracker(){
+        double totalIncome = 0;
+        double totalExpense = 0;
+
+        for (Transaction transaction : transactions) {
+            if (transaction.getType().equalsIgnoreCase("income")) {
+                totalIncome += transaction.getAmount();
+            } else if (transaction.getType().equalsIgnoreCase("expense")) {
+                totalExpense += transaction.getAmount();
+            }
+        }
+        System.out.println("Total Income: " + totalIncome);
+        System.out.println("Total Expense: " + totalExpense);
+        System.out.println("Difference: " + (totalIncome-totalExpense));
+        if (totalExpense <= totalIncome - (totalIncome * 0.4)) {
+            System.out.println("You are well within budget");
+        } else if(totalExpense <= totalIncome - (totalIncome * 0.2)){
+            System.out.println("Budget to Income gap is low");
+        } else if(totalExpense <= 0){
+            System.out.println("Warning!");
+        } else {
+            System.out.println("You are over budget!!");
+        }
+    }
+
+    public void taxCalculation() {
+        double totIncome = 0;
+        for (Transaction transaction : transactions) {
+            totIncome += transaction.getAmount();
+        }
 
         double monthlyTaxAmount;
         double annualTaxAmount;
