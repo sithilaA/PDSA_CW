@@ -1,7 +1,9 @@
 package main.service;
 
 import main.model.Transaction;
+import main.utils.MergeSort;
 
+import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -38,17 +40,27 @@ public class TransactionService {
     }
     public void printAllTransactions() {
         System.out.println("Incomes:");
+        List<Transaction> incomes = new LinkedList<>();
         for (Transaction transaction : transactions) {
             if (transaction.getType().equalsIgnoreCase("income")) {
-                System.out.println("Description: " + transaction.getDescription() + ", Amount: " + transaction.getAmount() + ", Category: " + transaction.getCategory());
+                incomes.add(transaction);
             }
+        }
+        MergeSort.sort(incomes);
+        for (Transaction transaction : incomes) {
+            System.out.println("Description: " + transaction.getDescription() + ", Amount: " + transaction.getAmount() + ", Category: " + transaction.getCategory());
         }
 
         System.out.println("\nExpenses:");
+        List<Transaction> expenses = new LinkedList<>();
         for (Transaction transaction : transactions) {
             if (transaction.getType().equalsIgnoreCase("expense")) {
-                System.out.println("Description: " + transaction.getDescription() + ", Amount: " + transaction.getAmount() + ", Category: " + transaction.getCategory());
+                expenses.add(transaction);
             }
+        }
+        MergeSort.sort(expenses);
+        for (Transaction transaction : expenses) {
+            System.out.println("Description: " + transaction.getDescription() + ", Amount: " + transaction.getAmount() + ", Category: " + transaction.getCategory());
         }
     }
 
@@ -150,5 +162,9 @@ public class TransactionService {
 
         System.out.println("Annual income: LKR " + annualIncome + "\n" + "Annual Tax Amount :" + annualTaxAmount);
         System.out.println("Monthly income: LKR " + totIncome + "\n" + "Monthly Tax Amount :" + monthlyTaxAmount);
+    }
+    public void reportDate() {
+        LocalDate currentDate = LocalDate.now();
+        System.out.println("\nReport generated on: " + currentDate);
     }
 }

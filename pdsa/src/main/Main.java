@@ -297,7 +297,7 @@ public class Main {
         transactionService.printSummary();
         System.out.println("---------------------");
 
-
+        transactionService.reportDate();
     }
     private static void currencyConversion() {
         Scanner scanner = new Scanner(System.in);
